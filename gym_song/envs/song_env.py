@@ -25,21 +25,21 @@ class SongEnv(gym.Env):
   def randomSong(self):
       self.currentSong = rand.randint(1, 101)
 
-  def isTerminalState(self, state):
-      return state == self.targetSong
+  def isTerminalState(self):
+      return self.currentSong == self.targetSong
 
   def step(self, action):
       resultState = 0
       if action == 0:
           self.nextSong()
-          resultState = self.currentSong
+          resultState = self.targetSong - self.currentSong
       else:
           self.randomSong()
-          resultState = self.currentSong
+          resultState = self.targetSong - self.currentSong
 
-      reward = -1 if not self.isTerminalState(resultState) else 0
+      reward = -1 if not self.isTerminalState() else 0
 
-      return resultState, reward, self.isTerminalState(self.currentSong), None
+      return abs(resultState), reward, self.isTerminalState(), None
 
   def reset(self):
       self.currentSong = rand.randint(1, 101)
@@ -48,5 +48,5 @@ class SongEnv(gym.Env):
           self.targetSong = rand.randint(1, 101)
 
   def render(self):
-      print(currentSong)
+      print(self.currentSong)
 

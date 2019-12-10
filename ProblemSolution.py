@@ -16,7 +16,7 @@ env.reset()
 goal_moves = 40
 
 score_requirement = -50
-initial_games = 10000
+initial_games = 100000
 
 def some_random_games():
     for episode in range(5):
@@ -95,12 +95,11 @@ def train_model(training_data, model=False):
     if not model:
         model = neural_network_model(input_size = len(X[0]))
 
-    model.fit({'input': X}, {'targets': Y}, n_epoch = 3, snapshot_step = 500, show_metric=True, run_id='openAI')
+    model.fit({'input': X}, {'targets': Y}, n_epoch = 1, snapshot_step = 500, show_metric=True, run_id='openAI')
 
     return model
 
 training_data = initial_population()
-print(training_data)
 model = train_model(training_data)
 
 
@@ -109,15 +108,15 @@ choices = []
 for each_game in range(10):
     score = 0
     game_memory = []
-    prev_obs = []
+    prev_obs = 0
     env.reset()
-    for _ in range(goal_steps):
-        env.render()
+    for _ in range(goal_moves):
+        
 
-        if len(prev_obs)==0:
+        if prev_obs == 0:
             action = random.randrange(0,2)
         else:
-            action = np.argmax(model.predict(prev_obs.reshape(-1,1,1))[0])
+            action = np.argmax(model.predict(np.array(prev_obs).reshape(-1, 1, 1))[0])
 
         choices.append(action)
                 
