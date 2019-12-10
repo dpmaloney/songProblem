@@ -1,1 +1,1 @@
-from gym_foo.envs.song_env import SongEnv
+from gym_song.envs.song_env import SongEnv

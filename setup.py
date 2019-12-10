@@ -1,3 +1,4 @@
 from setuptools import setup
 
-setup(name="gym_song", version="1", install_requires=['gym'])
+setup(name="gym_song", version="2", install_requires=['gym'])
+
